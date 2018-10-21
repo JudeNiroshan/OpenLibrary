@@ -1,7 +1,12 @@
-# OpenLibrary
-Library System for everyone!!!
+# OpenLibrary :books:
 
-Steps to test run
+
+Open Library is an open source library system. It is more *focused on small scale libraries typically available on offices and other organizational units.*
+It is free! Anyone can contribute this to make this a robust system. This repository do not have a complete system. **It only contains a server-side** back end which serves as an API for user interfaces.
+
+## Technologies: NodeJS, Docker
+
+## Steps to test run
 
 docker build -t <your_tag> .
 
