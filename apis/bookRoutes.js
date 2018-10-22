@@ -11,12 +11,19 @@ router.get('/', (req, res) => {
   res.json([{name: 'book 1'}, {name: 'book 2'}, {name: 'book 3'}])
 });
 
+// Get a single book
 router.get('/:id', (req, res) => {
   res.json({name: 'Some book'});
 });
 
-router.put('/addbook', (req, res) => {
+// Add book
+router.post('/', (req, res) => {
   res.json({name: 'book added'});
+});
+
+// Update book
+router.put('/', (req, res) => {
+  res.json({name: 'book updated'});
 });
 
 //export this router to use in our routes.js
