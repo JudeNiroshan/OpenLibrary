@@ -16,12 +16,12 @@ router.get('/:id', (req, res) => {
   res.json({name: 'Some book'});
 });
 
-// Add book
+// Add a book
 router.post('/', (req, res) => {
   res.json({name: 'book added'});
 });
 
-// Update book
+// Update a book
 router.put('/', (req, res) => {
   res.json({name: 'book updated'});
 });
