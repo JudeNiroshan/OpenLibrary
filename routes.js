@@ -9,11 +9,11 @@ var express = require('express');
 var router = express.Router();
 
 // Books related APIs
-var booksApi = require('./apis/booksRoutes.js');
+var booksApi = require('./apis/bookRoutes.js');
 router.use('/book', booksApi);
 
 // Users related APIs
-var usersApi = require('./apis/usersRoutes.js');
+var usersApi = require('./apis/userRoutes.js');
 router.use('/user', usersApi);
 
 module.exports = router;
