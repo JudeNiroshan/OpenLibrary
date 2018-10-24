@@ -24,7 +24,12 @@ router.get('/', (req, res) => {
 
 // Get a single book
 router.get('/:id', (req, res) => {
-  res.json({name: 'yet to implement'});
+
+  bookModel.find({isbn: req.params.id}, 'isbn title author', (err, books) => {
+    if (err) res.json({result: 'Oops, something went wrong :('});
+
+    res.json(books);
+  });
 });
 
 // Add a book
