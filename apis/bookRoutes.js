@@ -6,6 +6,9 @@
 var express = require('express');
 var bookModel = require('./models/book.model');// Import our BookModel
 var router = express.Router();
+var bodyParser = require('body-parser');
+router.use(bodyParser.json()); // support json encoded bodies
+router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // Get all books
 router.get('/', (req, res) => {
@@ -27,8 +30,14 @@ router.get('/:id', (req, res) => {
 // Add a book
 router.post('/', (req, res) => {
 
+  var param = req.body;
+
   //New book created using model
-  var newBook = new bookModel({name: 'book 1'});
+  var newBook = new bookModel({
+    isbn: param.isbn,
+    title: param.title,
+    author: param.author
+  });
 
   // Save the new book
   newBook.save(function (err) {
