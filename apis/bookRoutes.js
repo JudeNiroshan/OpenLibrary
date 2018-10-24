@@ -4,26 +4,49 @@
 'use strict';
 
 var express = require('express');
+var bookModel = require('./models/book.model');// Import our BookModel
 var router = express.Router();
 
 // Get all books
 router.get('/', (req, res) => {
-  res.json([{name: 'book 1'}, {name: 'book 2'}, {name: 'book 3'}])
+
+  // Find all books using our BookModel
+  bookModel.find(function (err, books) {
+    if (err) res.json({name: 'error getting all books'});
+
+    // send the books if success
+    res.json(books);
+  })
 });
 
 // Get a single book
 router.get('/:id', (req, res) => {
-  res.json({name: 'Some book'});
+  res.json({name: 'yet to implement'});
 });
 
 // Add a book
 router.post('/', (req, res) => {
-  res.json({name: 'book added'});
+
+  //New book created using model
+  var newBook = new bookModel({name: 'book 1'});
+
+  // Save the new book
+  newBook.save(function (err) {
+    if (err) res.json({name: 'error adding book'});
+
+    // send book added message
+    res.json({name: 'book added'});
+  });
 });
 
 // Update a book
 router.put('/', (req, res) => {
-  res.json({name: 'book updated'});
+  res.json({name: 'yet to implement'});
+});
+
+// Delete a book
+router.delete('/:id', (req, res) => {
+  res.json({name: 'yet to implement'});
 });
 
 //export this router to use in our routes.js

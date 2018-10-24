@@ -4,14 +4,22 @@
 Open Library is an open source library system. It is more *focused on small scale libraries typically available on offices and other organizational units.*
 It is free! Anyone can contribute this to make this a robust system. This repository do not have a complete system. **It only contains a server-side** back end which serves as an API for user interfaces.
 
-## Technologies: NodeJS, Docker
+## Technologies: NodeJS, Docker, MongoDB
 
-## Steps to test run
+### Frameworks: [Express.js](https://expressjs.com/), [Mongoose](https://mongoosejs.com/)
 
-docker build -t <your_tag> .
+## Steps to run
 
-docker run -p 4000:8080 <your_tag>
+1. Build `docker-compose build`
+2. Run `docker-compose run`
 
-Open PowerShell
+Use [Postman](https://www.getpostman.com/) app
 
-curl http://localhost:4000/
+To save a book to DB
+`POST` http://localhost:8080/api/book
+Note: no need to send any data now, it's hard-coded in server side
+
+To get all saved books
+`GET` http://localhost:8080/api/book
+
+Stop the services by `docker-compose stop`
