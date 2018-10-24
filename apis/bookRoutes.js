@@ -5,8 +5,9 @@
 
 var express = require('express');
 var bookModel = require('./models/book.model');// Import our BookModel
-var router = express.Router();
 var bodyParser = require('body-parser');
+var router = express.Router();
+
 router.use(bodyParser.json()); // support json encoded bodies
 router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
