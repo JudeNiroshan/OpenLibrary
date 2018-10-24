@@ -1,0 +1,122 @@
+swagger: "2.0"
+info:
+  description: "Open Library Server API Docs"
+  version: "1.0.0"
+  title: "Open Library APIs"
+  termsOfService: "term url here"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "localhost:8080"
+basePath: "/api"
+tags:
+- name: "book"
+  description: "Everything about library Books"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
+schemes:
+- "http"
+paths:
+  /book:
+    post:
+      tags:
+      - "book"
+      summary: "Add a new pet to the store"
+      description: ""
+      operationId: "addBook"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Book object that needs to be added to the library"
+        required: true
+        schema:
+          $ref: "#/definitions/Book"
+      responses:
+        405:
+          description: "Invalid input"
+    put:
+      tags:
+      - "book"
+      summary: "Update an existing book"
+      description: ""
+      operationId: "updateBook"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Book object that needs to be updated to the library"
+        required: true
+        schema:
+          $ref: "#/definitions/Book"
+      responses:
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Book not found"
+        405:
+          description: "Validation exception"
+    get:
+      tags:
+      - "book"
+      summary: "Find pet by ID"
+      description: "Returns a single pet"
+      operationId: "getPetById"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "petId"
+        in: "path"
+        description: "ID of pet to return"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
+        400:
+          description: "Invalid ID supplied"
+        404:
+          description: "Pet not found"
+  /book/:id:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Book by id"
+      description: ""
+      operationId: "findBookById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "id"
+        in: "query"
+        description: ""
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
+definitions:
+  Book:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "some name"
+externalDocs:
+  description: "Find out more about Swagger"
+  url: "http://swagger.io"

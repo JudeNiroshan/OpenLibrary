@@ -25,6 +25,10 @@ dbConnection.on('error', console.error.bind(console, 'MongoDB connection error:'
 var routes = require('./routes');
 app.use('/api', routes);
 
+// Define route to API documentation page(Swagger page)
+var apiDocument = require('./api-docs/document');
+app.use('/api-docs', apiDocument);
+
 // Test root
 app.get('/', (req, res) => {
   res.send('Hello world\n');

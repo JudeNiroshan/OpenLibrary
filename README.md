@@ -13,6 +13,8 @@ It is free! Anyone can contribute this to make this a robust system. This reposi
 1. Build `docker-compose build`
 2. Run `docker-compose run`
 
+Find the API documentation through http://localhost:8080/api-docs/
+
 Use [Postman](https://www.getpostman.com/) app
 
 To save a book to DB
