@@ -5,5 +5,5 @@
  * Note that `mongo` name should be same as mongoDB service name defined in docker-compose.yml
  */
 module.exports = {
-    'url' : 'mongodb://localhost:27017/open-library'
+    'url' : 'mongodb://mongo:27017/open-library'
 };
