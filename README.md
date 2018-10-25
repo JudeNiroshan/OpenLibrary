@@ -11,7 +11,7 @@ It is free! Anyone can contribute this to make this a robust system. This reposi
 ## Steps to run
 
 1. Build `docker-compose build`
-2. Run `docker-compose run`
+2. Run `docker-compose up`
 
 Find the API documentation through http://localhost:8080/api-docs/
 
