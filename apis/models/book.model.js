@@ -7,7 +7,9 @@ var Schema = mongoose.Schema;
 
 // Use Schema to create our own Book Schema
 var bookSchema = new Schema({
-    name : String
+    isbn: Number,
+    title : String,
+    author: String
 });
 
 // Create a model('BookModel') to our defined Schema and export it outside
