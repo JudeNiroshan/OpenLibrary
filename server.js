@@ -2,7 +2,7 @@
 
 const express = require('express');
 const mongoose = require('mongoose');
-const dbConfig = require('./config/database');
+const dbConfig = require('./config');
 
 // Constants
 const PORT = 8080;

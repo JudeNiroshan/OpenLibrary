@@ -16,4 +16,8 @@ router.use('/book', booksApi);
 var usersApi = require('./apis/userRoutes.js');
 router.use('/user', usersApi);
 
+// Authentication related APIs
+var authRoutes = require('./apis/authRoutes');
+router.use('/auth', authRoutes);
+
 module.exports = router;
