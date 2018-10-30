@@ -10,6 +10,11 @@ info:
 host: "localhost:8080"
 basePath: "/api"
 tags:
+- name: "auth"
+  description: "Everything about authentication"
+  externalDocs:
+    description: "Find out more"
+    url: "http://swagger.io"
 - name: "book"
   description: "Everything about library Books"
   externalDocs:
@@ -18,6 +23,68 @@ tags:
 schemes:
 - "http"
 paths:
+  /auth/register:
+    post:
+      tags:
+      - "auth"
+      summary: "Regsiter a user to library"
+      description: ""
+      operationId: "registerUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User that need to be added to library"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        400:
+          description: "Invalid input, username or password missing"
+        500:
+          description: "Internal server error"
+        409:
+          description: "Username already exists"
+          schema:
+            $ref: "#/definitions/AuthRes"
+        201:
+          description: "User registered successfully"
+          schema:
+            $ref: "#/definitions/AuthRes"
+  /auth/signin:
+    post:
+      tags:
+      - "auth"
+      summary: "Signin a user to library"
+      description: ""
+      operationId: "signinUser"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "User that need to be sign in to library"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        400:
+          description: "Invalid input, username or password missing"
+        401:
+          description: "Authentication failed"
+          schema:
+            $ref: "#/definitions/AuthRes"
+        500:
+          description: "Internal server error"
+        200:
+          description: "Signin success"
+          schema:
+            $ref: "#/definitions/AuthRes"
   /book:
     post:
       tags:
@@ -117,6 +184,32 @@ definitions:
       name:
         type: "string"
         example: "some name"
+  User:
+    type: "object"
+    required:
+    - "username"
+    - "password"
+    properties:
+      username:
+        type: "string"
+      password:
+        type: "string"
+      admin:
+        type: "boolean"
+      _id:
+        type: "string"
+  AuthRes:
+    type: "object"
+    required:
+    - "auth"
+    - "token"
+    properties:
+      auth:
+        type: "boolean"
+      token:
+        type: "string"
+      comment:
+        type: "string"
 externalDocs:
   description: "Find out more about Swagger"
   url: "http://swagger.io"
