@@ -7,12 +7,13 @@ var express = require('express');
 var bookModel = require('./models/book.model');// Import our BookModel
 var bodyParser = require('body-parser');
 var router = express.Router();
+var tokenVerifier = require('./tokenVerifier');
 
 router.use(bodyParser.json()); // support json encoded bodies
 router.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
 // Get all books
-router.get('/', (req, res) => {
+router.get('/', tokenVerifier.verifyUser, (req, res) => {
 
   // Find all books using our BookModel
   bookModel.find(function (err, books) {
@@ -23,11 +24,21 @@ router.get('/', (req, res) => {
   })
 });
 
-// Get a single book
-router.get('/:id', (req, res) => {
+// Get a single book by id
+router.get('/id/:id', (req, res) => {
 
-  bookModel.find({isbn: req.params.id}, 'isbn title author', (err, books) => {
-    if (err) res.json({result: 'Oops, something went wrong :('});
+  bookModel.find({'_id' : req.params.id}, 'isbn title author', (err, books) => {
+    if (err) res.json({result: 'Oops, something went wrong :(', err});
+
+    res.json(books);
+  });
+});
+
+// Get book by isbn
+router.get('/isbn/:isbn', (req, res) => {
+
+  bookModel.find({'isbn' : req.params.isbn}, 'isbn title author', (err, books) => {
+    if (err) res.json({result: 'Oops, something went wrong :(', err});
 
     res.json(books);
   });

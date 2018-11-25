@@ -133,29 +133,24 @@ paths:
     get:
       tags:
       - "book"
-      summary: "Find pet by ID"
-      description: "Returns a single pet"
-      operationId: "getPetById"
+      summary: "Find all books"
+      description: "Returns all books"
+      operationId: "getAllBooks"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
-      - name: "petId"
-        in: "path"
-        description: "ID of pet to return"
+      - name: "x-access-token"
+        in: "header"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Book"
-        400:
-          description: "Invalid ID supplied"
-        404:
-          description: "Pet not found"
-  /book/:id:
+        403:
+          description: "Access denied forbidden"
+  /book/id/:id:
     get:
       tags:
       - "book"
@@ -175,15 +170,43 @@ paths:
           description: "successful operation"
           schema:
             $ref: "#/definitions/Book"
+  /book/isbn/:isbn:
+    get:
+      tags:
+      - "book"
+      summary: "Finds Book by isbn number"
+      description: ""
+      operationId: "findBookByIsbn"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "isbn"
+        in: "query"
+        description: ""
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Book"
 definitions:
   Book:
     type: "object"
     required:
-    - "name"
+    - "title"
+    - "isbn"
+    - "author"
     properties:
-      name:
+      title:
         type: "string"
         example: "some name"
+      isbn:
+        type: "number"
+        example: 123123
+      author:
+        type: "string"
+        example: "author name"
   User:
     type: "object"
     required:

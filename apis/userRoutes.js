@@ -5,10 +5,15 @@
 
 var express = require('express');
 var router = express.Router();
+var userModel = require('./models/user.model');
 
 // Get all users
 router.get('/', (req, res) => {
-  res.json([{name: 'jude'}, {name: 'Ishara'}, {name: 'theepan'}])
+  userModel.find(function (err, users) {
+    if (err) return res.status(501).json(err);
+
+    res.status(200).json(users);
+  })
 });
 
 //export this router to use in our routes.js
