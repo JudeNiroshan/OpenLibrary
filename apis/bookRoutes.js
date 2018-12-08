@@ -49,16 +49,24 @@ router.post('/', tokenVerifier.verifyAdmin, (req, res) => {
 
   var param = req.body;
 
+  if (!param.isbn) return res.status(400).json({ 'message': 'isbn number missing' });
+  if (!param.title) return res.status(400).json({ 'message': 'Book Title missing' });
+  if (!param.description) return res.status(400).json({ 'message': 'Book Description missing' });
+  if (!param.author) return res.status(400).json({ 'message': 'Book Author missing' });
+  if (!param.quantity) return res.status(400).json({ 'message': 'Book quantity missing' });
+
   //New book created using model
   var newBook = new bookModel({
     isbn: param.isbn,
     title: param.title,
-    author: param.author
+    description: param.description,
+    author: param.author,
+    quantity: param.quantity
   });
 
   // Save the new book
   newBook.save(function (err) {
-    if (err) res.json({ name: 'error adding book' });
+    if (err) res.json({ name: 'error adding book', 'err': err });
 
     // send book added message
     res.json({ name: 'book added' });
@@ -72,7 +80,16 @@ router.put('/', tokenVerifier.verifyAdmin, (req, res) => {
 
 // Delete a book
 router.delete('/:id', tokenVerifier.verifyAdmin, (req, res) => {
-  res.json({ name: 'yet to implement' });
+  var bookIdToDelete = req.params.id;
+  if (!bookIdToDelete) return res.status(400).json({ 'message': 'Book id missing' });
+
+  bookModel.findByIdAndDelete(bookIdToDelete, (err, deletedBook) => {
+    if (err) return res.status(500).json(err);
+
+    if (deletedBook) return res.json({ 'message': 'Book deleted' });
+
+    return res.status(404).json({ 'message': 'Book not found' });
+  });
 });
 
 //export this router to use in our routes.js

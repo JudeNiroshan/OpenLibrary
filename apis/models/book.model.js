@@ -7,8 +7,10 @@ var Schema = mongoose.Schema;
 
 // Use Schema to create our own Book Schema
 var bookSchema = new Schema({
-    isbn: Number,
+    isbn: String,
     title : String,
+    description : String,
+    quantity : Number,
     author: String
 });
 
