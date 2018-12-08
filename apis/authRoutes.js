@@ -35,16 +35,17 @@ router.post('/signin', (req, res) => {
         // Error when loading a user
         if (err) return res.status(500).json({ 'message': 'Error when loading user' });
 
-        // User not found for given username, unautherized
+        // User not found for given username, unauthorized
         if (!user) return res.status(401).json({ 'auth': false, 'token': null, 'message': 'Authentication failed' });
 
         var passwordMatched = bcrypt.compareSync(password, user.password);
 
-        // Check password match, if not matched, then unautherized
+        // Check password match, if not matched, then unauthorized
         if (!passwordMatched) return res.status(401).json({ 'auth': false, 'token': null, 'message': 'Authentication failed' });
 
-        // Paylod to sign into JWT token
-        var payload = { '_id': user._id, 'admin': user.admin };
+        // Payload to sign into JWT token
+        var admin = user.role === 'admin';
+        var payload = { '_id': user._id, 'admin': admin };
 
         // Generate JWT token
         var jwtToken = jwt.sign(payload, config.jwtKey, { expiresIn: 86400 });
@@ -65,7 +66,7 @@ router.post('/register', (req, res) => {
     var lowerUsername = username.toLowerCase();
     var hashedPassword = bcrypt.hashSync(password);
 
-    // Confitions to find a user
+    // Conditions to find a user
     var conditions = {
         'username': lowerUsername
     };
@@ -80,18 +81,17 @@ router.post('/register', (req, res) => {
         // Create new user
         UserModel.create({
             'username': lowerUsername,
-            'password': hashedPassword,
-            'admin': false
+            'password': hashedPassword
         }, function (err, user) {
             if (err) return res.status(500).json({ 'auth': false, 'token': null, 'message': 'Error registering user' })
 
-            // Paylod to sign into JWT token
-            var payload = { '_id': user._id, 'admin': user.admin };
+            // Payload to sign into JWT token
+            var payload = { '_id': user._id};
 
             // Generate JWT token
             var jwtToken = jwt.sign(payload, config.jwtKey, { expiresIn: 86400 });
 
-            // User created, autherized
+            // User created, authorized
             res.status(201).json({ 'auth': true, 'token': jwtToken });
         });
 

@@ -20,6 +20,7 @@ mongoose.Promise = global.Promise;
 // log error to console if the db connection failed
 var dbConnection = mongoose.connection;
 dbConnection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+dbConnection.on('connected', dbConfig.createAdminUser);
 
 // Define API routes
 var routes = require('./routes');

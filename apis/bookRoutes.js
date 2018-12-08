@@ -17,7 +17,7 @@ router.get('/', tokenVerifier.verifyUser, (req, res) => {
 
   // Find all books using our BookModel
   bookModel.find(function (err, books) {
-    if (err) res.json({name: 'error getting all books'});
+    if (err) res.json({ name: 'error getting all books' });
 
     // send the books if success
     res.json(books);
@@ -25,27 +25,27 @@ router.get('/', tokenVerifier.verifyUser, (req, res) => {
 });
 
 // Get a single book by id
-router.get('/id/:id', (req, res) => {
+router.get('/id/:id', tokenVerifier.verifyUser, (req, res) => {
 
-  bookModel.find({'_id' : req.params.id}, 'isbn title author', (err, books) => {
-    if (err) res.json({result: 'Oops, something went wrong :(', err});
+  bookModel.find({ '_id': req.params.id }, 'isbn title author', (err, books) => {
+    if (err) res.json({ result: 'Oops, something went wrong :(', err });
 
     res.json(books);
   });
 });
 
 // Get book by isbn
-router.get('/isbn/:isbn', (req, res) => {
+router.get('/isbn/:isbn', tokenVerifier.verifyUser, (req, res) => {
 
-  bookModel.find({'isbn' : req.params.isbn}, 'isbn title author', (err, books) => {
-    if (err) res.json({result: 'Oops, something went wrong :(', err});
+  bookModel.find({ 'isbn': req.params.isbn }, 'isbn title author', (err, books) => {
+    if (err) res.json({ result: 'Oops, something went wrong :(', err });
 
     res.json(books);
   });
 });
 
 // Add a book
-router.post('/', (req, res) => {
+router.post('/', tokenVerifier.verifyAdmin, (req, res) => {
 
   var param = req.body;
 
@@ -58,21 +58,21 @@ router.post('/', (req, res) => {
 
   // Save the new book
   newBook.save(function (err) {
-    if (err) res.json({name: 'error adding book'});
+    if (err) res.json({ name: 'error adding book' });
 
     // send book added message
-    res.json({name: 'book added'});
+    res.json({ name: 'book added' });
   });
 });
 
 // Update a book
-router.put('/', (req, res) => {
-  res.json({name: 'yet to implement'});
+router.put('/', tokenVerifier.verifyAdmin, (req, res) => {
+  res.json({ name: 'yet to implement' });
 });
 
 // Delete a book
-router.delete('/:id', (req, res) => {
-  res.json({name: 'yet to implement'});
+router.delete('/:id', tokenVerifier.verifyAdmin, (req, res) => {
+  res.json({ name: 'yet to implement' });
 });
 
 //export this router to use in our routes.js
