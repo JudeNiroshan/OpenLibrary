@@ -51,7 +51,6 @@ router.post('/', tokenVerifier.verifyAdmin, (req, res) => {
 
   if (!param.isbn) return res.status(400).json({ 'message': 'isbn number missing' });
   if (!param.title) return res.status(400).json({ 'message': 'Book Title missing' });
-  if (!param.description) return res.status(400).json({ 'message': 'Book Description missing' });
   if (!param.author) return res.status(400).json({ 'message': 'Book Author missing' });
   if (!param.quantity) return res.status(400).json({ 'message': 'Book quantity missing' });
 
@@ -61,12 +60,21 @@ router.post('/', tokenVerifier.verifyAdmin, (req, res) => {
     title: param.title,
     description: param.description,
     author: param.author,
-    quantity: param.quantity
+    quantity: param.quantity,
+    frontCover: param.frontCover,
+    backCover: param.backCover,
+    language: param.language
   });
+
+  if (Array.isArray(param.genre)) {
+    param.genre.forEach((value) => {
+      newBook.genre.push(value)
+    })
+  }
 
   // Save the new book
   newBook.save(function (err) {
-    if (err) res.json({ name: 'error adding book', 'err': err });
+    if (err) return res.json({ name: 'error adding book', 'err': err });
 
     // send book added message
     res.json({ name: 'book added' });

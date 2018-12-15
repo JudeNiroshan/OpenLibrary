@@ -197,16 +197,33 @@ definitions:
     - "title"
     - "isbn"
     - "author"
+    - "quantity"
     properties:
       title:
         type: "string"
         example: "some name"
       isbn:
-        type: "number"
-        example: 123123
+        type: "string"
+        example: "123123"
+      description : 
+        type: "string"
       author:
         type: "string"
         example: "author name"
+      quantity:
+        type: "number"
+        example: 5
+      frontCover:
+        type: "string"
+      backCover:
+        type: "string"
+      language: 
+        type: "string"
+        default: "english"
+      genre:
+        type: "array"
+        items:
+            $ref: "#/definitions/Genre"
   User:
     type: "object"
     required:
@@ -221,6 +238,14 @@ definitions:
         type: "boolean"
       _id:
         type: "string"
+  Genre:
+    type: "object"
+    required:
+    - "name"
+    properties:
+      name:
+        type: "string"
+        example: "fictional" 
   AuthRes:
     type: "object"
     required:
